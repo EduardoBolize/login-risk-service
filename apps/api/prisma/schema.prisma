@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Decision {
+  ALLOW
+  CHALLENGE
+  DENY
+}
+
+model RiskAssessment {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id")
+  ip           String
+  deviceId     String   @map("device_id")
+  userAgent    String?  @map("user_agent")
+  country      String?
+  loginSuccess Boolean  @map("login_success")
+  score        Int
+  decision     Decision
+  reasons      String[]
+  ruleResults  Json     @map("rule_results")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@map("risk_assessments")
+}
+
+model UserDevice {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @map("user_id")
+  deviceId    String   @map("device_id")
+  firstSeenAt DateTime @map("first_seen_at")
+  lastSeenAt  DateTime @map("last_seen_at")
+
+  @@unique([userId, deviceId])
+  @@map("user_devices")
+}
