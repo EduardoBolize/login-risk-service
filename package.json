@@ -9,6 +9,7 @@
     "infra:up": "docker compose up -d",
     "infra:down": "docker compose down",
     "dev:api": "pnpm --filter api start:dev",
+    "simulate": "pnpm --filter api simulate",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",

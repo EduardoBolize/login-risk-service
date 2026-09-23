@@ -68,6 +68,24 @@ pnpm dev:api                                   # http://localhost:3000
 ```bash
 pnpm test        # testes unitários
 pnpm lint
+pnpm simulate    # simula ataques contra a API rodando
+```
+
+### Simulação de ataques
+
+`pnpm simulate` executa cenários realistas contra a API e confere cada decisão. Ele também roda na CI como teste de ponta a ponta, com Postgres e Redis reais:
+
+```
+✔ Usuário legítimo: primeiro login no laptop (Brasil)
+    ALLOW     score   0  —
+✔ Device novo: Alice entra pelo celular
+    CHALLENGE score  30  NEW_DEVICE
+✔ Conta comprometida: Lisboa 30 min depois, device desconhecido
+    DENY      score  80  NEW_DEVICE, IMPOSSIBLE_TRAVEL
+✔ Brute force: 5 senhas erradas e então a correta
+    CHALLENGE score  45  BRUTE_FORCE
+✔ Credential stuffing: um IP testando 6 contas
+    CHALLENGE score  50  CREDENTIAL_STUFFING
 ```
 
 ## Endpoints
