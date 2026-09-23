@@ -9,6 +9,7 @@ coverage/
 
 # Terraform
 .terraform/
+backend.hcl
 *.tfstate
 *.tfstate.*
 *.tfvars

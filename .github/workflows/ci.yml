@@ -55,6 +55,26 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.app }}
           cache-to: type=gha,mode=max,scope=${{ matrix.app }}
 
+  terraform:
+    name: Terraform fmt + validate
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - run: terraform fmt -check -recursive
+
+      - name: Validate main configuration
+        run: terraform init -backend=false -input=false && terraform validate
+
+      - name: Validate bootstrap
+        working-directory: infra/terraform/bootstrap
+        run: terraform init -backend=false -input=false && terraform validate
+
   e2e:
     name: End-to-end (Postgres + Redis)
     runs-on: ubuntu-latest
