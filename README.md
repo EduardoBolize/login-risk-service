@@ -50,6 +50,18 @@ Cada regra implementa `RiskRule` (padrão Strategy) com duas fases:
 
 **Fail-open:** se uma regra falhar (ex.: timeout de 200 ms no Redis), ela é ignorada, o login é avaliado com as demais e a resposta vem com `degraded: true`. Bloquear todos os logins porque o cache caiu seria pior do que perder um sinal temporariamente.
 
+## Rodando com Docker
+
+Sobe Postgres, Redis, API (aplicando as migrations no boot) e dashboard:
+
+```bash
+docker compose up -d --build --wait
+pnpm simulate          # gera dados de exemplo (requer Node + pnpm install)
+```
+
+- API: http://localhost:3000 (Swagger em `/docs`)
+- Dashboard: http://localhost:8080
+
 ## Rodando localmente
 
 Pré-requisitos: Node 22, pnpm (`corepack enable`), Docker.

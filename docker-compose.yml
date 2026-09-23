@@ -1,3 +1,6 @@
+# `docker compose up --build` runs the whole stack.
+# `pnpm infra:up` starts only Postgres and Redis, for running the API locally with hot reload.
+
 services:
   postgres:
     image: postgres:16-alpine
@@ -24,6 +27,35 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://risk:risk@postgres:5432/login_risk?schema=public
+      REDIS_URL: redis://redis:6379
+      API_KEYS: dev-api-key
+      CORS_ORIGINS: http://localhost:8080,http://localhost:5173
+    ports:
+      - '3000:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+      args:
+        VITE_API_URL: http://localhost:3000
+        VITE_API_KEY: dev-api-key
+    ports:
+      - '8080:80'
+    depends_on:
+      - api
 
 volumes:
   pgdata:
