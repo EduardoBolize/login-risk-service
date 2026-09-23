@@ -6,7 +6,8 @@
     "node": ">=22"
   },
   "scripts": {
-    "infra:up": "docker compose up -d",
+    "infra:up": "docker compose up -d --wait postgres redis",
+    "stack:up": "docker compose up -d --build --wait",
     "infra:down": "docker compose down",
     "dev:api": "pnpm --filter api start:dev",
     "dev:dashboard": "pnpm --filter dashboard dev",
