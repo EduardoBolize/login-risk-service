@@ -65,6 +65,13 @@ pnpm dev:api                                   # http://localhost:3000
 - Swagger: http://localhost:3000/docs
 - Health: http://localhost:3000/health
 
+Dashboard (em outro terminal):
+
+```bash
+cp apps/dashboard/.env.example apps/dashboard/.env
+pnpm dev:dashboard                             # http://localhost:5173
+```
+
 ```bash
 pnpm test        # testes unitários
 pnpm lint
