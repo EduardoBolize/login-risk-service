@@ -26,9 +26,9 @@ x-api-key: dev-api-key
 |---|---|
 | API | NestJS (Node.js 22) + Prisma |
 | Dados | PostgreSQL (histórico, devices) · Redis (estado quente das regras) |
-| Dashboard | React + Vite *(dia 2)* |
-| Infra | AWS (ECS Fargate, RDS, ElastiCache, S3) via Terraform *(dia 3)* |
-| CI/CD | GitHub Actions *(dias 2–3)* |
+| Dashboard | React + Vite |
+| Infra | AWS (ECS Fargate, RDS, ElastiCache, S3) via Terraform |
+| CI/CD | GitHub Actions |
 
 ## Motor de regras
 
@@ -76,17 +76,3 @@ pnpm lint
 | `GET` | `/v1/assessments?decision=&userId=&limit=` | Últimas avaliações |
 | `GET` | `/v1/assessments/summary` | Contagem por decisão nas últimas 24h |
 | `GET` | `/health` | Status do Postgres e do Redis |
-
-## Roadmap
-
-- [x] **Dia 1** — API, motor de regras, Redis/Postgres, testes unitários
-- [ ] **Dia 2** — Dashboard React, script de simulação de ataque, Dockerfile, CI
-- [ ] **Dia 3** — Terraform (AWS), deploy via GitHub Actions com OIDC
-
-### Próximos passos (fora do escopo do MVP)
-
-- Persistência assíncrona das avaliações (BullMQ/SQS) para tirar o Postgres do caminho quente
-- Endpoint de feedback (`MFA passou?`, `era fraude?`) para calibrar pesos e treinar um modelo
-- Pesos e thresholds configuráveis por tenant, com auditoria
-- Regras adicionais: IP de datacenter/TOR, horário incomum, reputação de IP
-- Testes e2e com Testcontainers e teste de carga com k6
