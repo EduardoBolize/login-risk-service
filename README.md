@@ -1,5 +1,7 @@
 # Login Risk Service
 
+[![CI](https://github.com/EduardoBolize/login-risk-service/actions/workflows/ci.yml/badge.svg)](https://github.com/EduardoBolize/login-risk-service/actions/workflows/ci.yml)
+
 Serviço que avalia **em tempo real o risco de uma tentativa de login** e responde com um score (0–100), uma decisão (`ALLOW` / `CHALLENGE` / `DENY`) e os motivos — para que a aplicação cliente decida entre liberar, pedir MFA ou bloquear.
 
 ```http
