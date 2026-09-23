@@ -1,4 +1,4 @@
-import { Global, Inject, Module, OnApplicationShutdown } from '@nestjs/common';
+import { Global, Inject, Logger, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
 import { Env } from '../config/env';
@@ -10,13 +10,20 @@ import { REDIS } from './redis.constants';
     {
       provide: REDIS,
       inject: [ConfigService],
-      useFactory: (config: ConfigService<Env, true>) =>
-        new Redis(config.get('REDIS_URL', { infer: true }), {
+      useFactory: (config: ConfigService<Env, true>) => {
+        const redis = new Redis(config.get('REDIS_URL', { infer: true }), {
           // Risk checks sit on the login hot path: fail fast instead of queueing,
           // so the engine can degrade (fail-open) rather than hang the login.
           maxRetriesPerRequest: 1,
           commandTimeout: 200,
-        }),
+        });
+        // Without a listener ioredis reports every reconnect failure as an unhandled error.
+        const logger = new Logger('Redis');
+        redis.on('error', (error: NodeJS.ErrnoException) =>
+          logger.warn(`Connection error: ${error.message || error.code || error.name}`),
+        );
+        return redis;
+      },
     },
   ],
   exports: [REDIS],
