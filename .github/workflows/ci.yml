@@ -35,3 +35,56 @@ jobs:
       - run: pnpm test
 
       - run: pnpm build
+
+  e2e:
+    name: End-to-end (Postgres + Redis)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: risk
+          POSTGRES_PASSWORD: risk
+          POSTGRES_DB: login_risk
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U risk -d login_risk"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://risk:risk@localhost:5432/login_risk?schema=public
+      REDIS_URL: redis://localhost:6379
+      API_KEYS: ci-api-key
+      API_KEY: ci-api-key
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Apply migrations
+        run: pnpm --filter api prisma:deploy
+
+      - name: Start API
+        run: |
+          pnpm --filter api build
+          pnpm --filter api start > api.log 2>&1 &
+          curl -sf --retry 30 --retry-connrefused --retry-delay 1 http://localhost:3000/health
+
+      - name: Simulate attack scenarios
+        run: pnpm simulate
+
+      - name: API logs
+        if: failure()
+        run: cat api.log
