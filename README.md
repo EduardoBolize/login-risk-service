@@ -107,6 +107,12 @@ pnpm simulate    # simula ataques contra a API rodando
     CHALLENGE score  50  CREDENTIAL_STUFFING
 ```
 
+## Deploy na AWS
+
+A infraestrutura fica em [`infra/terraform`](infra/terraform): VPC em 2 AZs, ECS Fargate atrás de um ALB, RDS PostgreSQL, ElastiCache Redis, S3 para o dashboard e Secrets Manager. O deploy roda via GitHub Actions a cada push na `main`, autenticando na AWS por **OIDC** (sem access keys no GitHub).
+
+Passo a passo, arquitetura e custos em [docs/deploy.md](docs/deploy.md).
+
 ## Endpoints
 
 | Método | Rota | Descrição |
