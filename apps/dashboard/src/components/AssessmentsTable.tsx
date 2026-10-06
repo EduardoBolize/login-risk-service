@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 import type { Assessment } from '../api';
 import { DECISION_STYLES, REASON_LABELS, RULE_LABELS, countryFlag, timeAgo } from '../format';
-import { DecisionBadge } from './DecisionBadge';
 
 export function AssessmentsTable({ assessments }: { assessments: Assessment[] }) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -60,7 +59,11 @@ export function AssessmentsTable({ assessments }: { assessments: Assessment[] })
                   />
                 </td>
                 <td className="px-4 py-3">
-                  <DecisionBadge decision={assessment.decision} />
+                  <span
+                    className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${DECISION_STYLES[assessment.decision].badge}`}
+                  >
+                    {assessment.decision}
+                  </span>
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap gap-1">

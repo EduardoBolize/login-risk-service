@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { GeoModule } from '../geo/geo.module';
+import { GeoIpProvider } from '../geo/geo-ip.provider';
 import { DeviceRepository, PrismaDeviceRepository } from './devices/device.repository';
 import { RISK_RULES, RiskRule } from './domain/types';
 import { RiskEngine } from './engine/risk-engine';
@@ -14,9 +14,9 @@ import { NewDeviceRule } from './rules/new-device.rule';
 const RULES = [BruteForceRule, CredentialStuffingRule, NewDeviceRule, ImpossibleTravelRule];
 
 @Module({
-  imports: [GeoModule],
   controllers: [RiskController, AssessmentsController],
   providers: [
+    GeoIpProvider,
     { provide: RISK_CONFIG, useValue: defaultRiskConfig },
     { provide: DeviceRepository, useClass: PrismaDeviceRepository },
     ...RULES,
