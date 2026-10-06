@@ -27,14 +27,9 @@ export function App() {
     <div className="min-h-screen bg-slate-100">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
-          <div>
-            <h1 className="text-lg font-semibold text-slate-900">Login Risk Dashboard</h1>
-            <p className="text-xs text-slate-500">Avaliações de risco em tempo real</p>
-          </div>
+          <h1 className="text-lg font-semibold text-slate-900">Login Risk</h1>
           <span className="flex items-center gap-2 text-xs text-slate-500">
-            <span
-              className={`h-2 w-2 rounded-full ${error ? 'bg-rose-500' : 'animate-pulse bg-emerald-500'}`}
-            />
+            <span className={`h-2 w-2 rounded-full ${error ? 'bg-rose-500' : 'bg-emerald-500'}`} />
             {error ? 'API indisponível' : 'Ao vivo'}
           </span>
         </div>
@@ -52,7 +47,7 @@ export function App() {
 
         <SummaryCards summary={summary.data} />
 
-        <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-lg border border-slate-200 bg-white">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-4 py-3">
             <h2 className="font-semibold text-slate-900">Últimas avaliações</h2>
             <div
@@ -66,9 +61,9 @@ export function App() {
                   type="button"
                   onClick={() => setFilter(option)}
                   aria-pressed={filter === option}
-                  className={`rounded-md px-3 py-1 text-xs font-medium transition ${
+                  className={`rounded-md px-3 py-1 text-xs font-medium ${
                     filter === option
-                      ? 'bg-white text-slate-900 shadow-sm'
+                      ? 'bg-white text-slate-900'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >

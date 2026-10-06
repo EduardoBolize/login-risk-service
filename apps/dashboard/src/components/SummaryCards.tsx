@@ -15,7 +15,7 @@ export function SummaryCards({ summary }: { summary?: Summary }) {
         return (
           <Card
             key={decision}
-            title={`${decision} · ${style.label}`}
+            title={decision}
             value={summary ? count : '—'}
             footer={
               <div className="mt-3 flex items-center gap-2">
@@ -42,7 +42,7 @@ function Card({
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="rounded-lg border border-slate-200 bg-white p-5">
       <p className="text-sm font-medium text-slate-500">{title}</p>
       <p className="mt-1 text-3xl font-semibold tabular-nums text-slate-900">{value}</p>
       {footer}
