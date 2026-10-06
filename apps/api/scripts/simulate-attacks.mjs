@@ -130,7 +130,7 @@ for (const scenario of scenarios) {
   if (!ok) failures++;
 
   const reasons = result.reasons.length ? result.reasons.join(', ') : '—';
-  console.log(`${ok ? '✔' : '✘'} ${scenario.title}`);
+  console.log(`${ok ? 'ok  ' : 'FAIL'} ${scenario.title}`);
   console.log(
     `    ${result.decision.padEnd(9)} score ${String(result.score).padStart(3)}  ${reasons}`,
   );
