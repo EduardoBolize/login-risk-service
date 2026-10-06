@@ -7,7 +7,6 @@ export interface Coordinates {
   lon: number;
 }
 
-/** Great-circle distance between two points, in kilometers. */
 export function haversineKm(a: Coordinates, b: Coordinates): number {
   const dLat = toRadians(b.lat - a.lat);
   const dLon = toRadians(b.lon - a.lon);

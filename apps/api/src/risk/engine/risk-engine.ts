@@ -1,5 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Decision, LoginContext, RISK_RULES, RiskReason, RiskRule, RuleResult } from '../domain/types';
+import {
+  Decision,
+  LoginContext,
+  RISK_RULES,
+  RiskReason,
+  RiskRule,
+  RuleResult,
+} from '../domain/types';
 import { RISK_CONFIG, RiskConfig } from '../risk.config';
 import { decide } from './decide';
 
@@ -8,7 +15,7 @@ export interface RiskEvaluation {
   decision: Decision;
   reasons: RiskReason[];
   results: RuleResult[];
-  /** Rules that errored (e.g. Redis timeout) and were skipped — the engine fails open. */
+  // Rules that errored (e.g. Redis timeout) are skipped: the engine fails open.
   failedRules: string[];
 }
 

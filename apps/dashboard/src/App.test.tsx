@@ -5,7 +5,13 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Assessment, Summary } from './api';
 import { App } from './App';
 
-const summary: Summary = { since: '2026-09-23T00:00:00Z', total: 10, ALLOW: 6, CHALLENGE: 3, DENY: 1 };
+const summary: Summary = {
+  since: '2026-09-23T00:00:00Z',
+  total: 10,
+  ALLOW: 6,
+  CHALLENGE: 3,
+  DENY: 1,
+};
 
 const denied: Assessment = {
   id: 'a1',
@@ -19,7 +25,13 @@ const denied: Assessment = {
   decision: 'DENY',
   reasons: ['NEW_DEVICE', 'IMPOSSIBLE_TRAVEL'],
   ruleResults: [
-    { rule: 'new_device', triggered: true, score: 30, reason: 'NEW_DEVICE', details: { knownDevices: 2 } },
+    {
+      rule: 'new_device',
+      triggered: true,
+      score: 30,
+      reason: 'NEW_DEVICE',
+      details: { knownDevices: 2 },
+    },
     {
       rule: 'impossible_travel',
       triggered: true,
@@ -104,7 +116,10 @@ describe('App', () => {
     await userEvent.click(screen.getByRole('button', { name: 'DENY' }));
 
     expect(await screen.findByRole('button', { name: 'DENY', pressed: true })).toBeInTheDocument();
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('decision=DENY'), expect.anything());
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining('decision=DENY'),
+      expect.anything(),
+    );
     await vi.waitFor(() => expect(screen.queryByText('bob')).not.toBeInTheDocument());
   });
 

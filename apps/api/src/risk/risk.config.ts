@@ -1,10 +1,5 @@
 export interface RiskConfig {
-  thresholds: {
-    /** score >= challengeFrom → CHALLENGE */
-    challengeFrom: number;
-    /** score > denyAbove → DENY */
-    denyAbove: number;
-  };
+  thresholds: { challengeFrom: number; denyAbove: number };
   bruteForce: { windowSeconds: number; maxFailures: number; score: number };
   credentialStuffing: { windowSeconds: number; maxDistinctUsers: number; score: number };
   newDevice: { cacheTtlSeconds: number; score: number };
@@ -26,5 +21,10 @@ export const defaultRiskConfig: RiskConfig = {
   credentialStuffing: { windowSeconds: 10 * 60, maxDistinctUsers: 5, score: 50 },
   newDevice: { cacheTtlSeconds: THIRTY_DAYS, score: 30 },
   // ~900 km/h is roughly commercial flight speed.
-  impossibleTravel: { maxSpeedKmh: 900, minDistanceKm: 500, stateTtlSeconds: THIRTY_DAYS, score: 50 },
+  impossibleTravel: {
+    maxSpeedKmh: 900,
+    minDistanceKm: 500,
+    stateTtlSeconds: THIRTY_DAYS,
+    score: 50,
+  },
 };

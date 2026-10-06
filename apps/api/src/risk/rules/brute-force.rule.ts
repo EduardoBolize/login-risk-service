@@ -2,14 +2,18 @@ import { Inject, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import Redis from 'ioredis';
 import { REDIS } from '../../redis/redis.constants';
-import { LoginContext, RiskReason, RiskRule, RuleResult, notTriggered, triggered } from '../domain/types';
+import {
+  LoginContext,
+  RiskReason,
+  RiskRule,
+  RuleResult,
+  notTriggered,
+  triggered,
+} from '../domain/types';
 import { RISK_CONFIG, RiskConfig } from '../risk.config';
 
-/**
- * Too many failed attempts against the same account within a sliding window.
- * Failures live in a sorted set scored by timestamp, so the window slides precisely
- * instead of resetting at fixed boundaries like a plain INCR counter would.
- */
+// Failures live in a sorted set scored by timestamp, so the window slides precisely
+// instead of resetting at fixed boundaries like a plain INCR counter would.
 @Injectable()
 export class BruteForceRule implements RiskRule {
   readonly name = 'brute_force';

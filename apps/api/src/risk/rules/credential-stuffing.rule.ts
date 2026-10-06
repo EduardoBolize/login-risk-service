@@ -1,13 +1,17 @@
 import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
 import { REDIS } from '../../redis/redis.constants';
-import { LoginContext, RiskReason, RiskRule, RuleResult, notTriggered, triggered } from '../domain/types';
+import {
+  LoginContext,
+  RiskReason,
+  RiskRule,
+  RuleResult,
+  notTriggered,
+  triggered,
+} from '../domain/types';
 import { RISK_CONFIG, RiskConfig } from '../risk.config';
 
-/**
- * A single IP trying many distinct accounts — the signature of credential stuffing.
- * Distinct users per IP are kept in a set that expires after a period of inactivity.
- */
+// The TTL is refreshed on every attempt, so the set only expires once the IP goes quiet.
 @Injectable()
 export class CredentialStuffingRule implements RiskRule {
   readonly name = 'credential_stuffing';

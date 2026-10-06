@@ -2,15 +2,18 @@ import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
 import { haversineKm } from '../../geo/haversine';
 import { REDIS } from '../../redis/redis.constants';
-import { LoginContext, RiskReason, RiskRule, RuleResult, notTriggered, triggered } from '../domain/types';
+import {
+  LoginContext,
+  RiskReason,
+  RiskRule,
+  RuleResult,
+  notTriggered,
+  triggered,
+} from '../domain/types';
 import { RISK_CONFIG, RiskConfig } from '../risk.config';
 
 const MS_PER_HOUR = 3_600_000;
 
-/**
- * The user would have to travel faster than a plane between the last successful
- * login and this one. The last known location is kept in a Redis hash per user.
- */
 @Injectable()
 export class ImpossibleTravelRule implements RiskRule {
   readonly name = 'impossible_travel';
