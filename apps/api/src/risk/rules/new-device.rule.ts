@@ -12,11 +12,8 @@ import {
 } from '../domain/types';
 import { RISK_CONFIG, RiskConfig } from '../risk.config';
 
-/**
- * Login from a device the user never successfully logged in with.
- * Postgres is the source of truth; Redis is a read-through cache of known devices.
- * A device only becomes trusted after a *successful* login.
- */
+// Postgres is the source of truth; Redis is a read-through cache of known devices.
+// A device only becomes trusted after a successful login.
 @Injectable()
 export class NewDeviceRule implements RiskRule {
   readonly name = 'new_device';

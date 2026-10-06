@@ -1,10 +1,5 @@
 export interface RiskConfig {
-  thresholds: {
-    /** score >= challengeFrom → CHALLENGE */
-    challengeFrom: number;
-    /** score > denyAbove → DENY */
-    denyAbove: number;
-  };
+  thresholds: { challengeFrom: number; denyAbove: number };
   bruteForce: { windowSeconds: number; maxFailures: number; score: number };
   credentialStuffing: { windowSeconds: number; maxDistinctUsers: number; score: number };
   newDevice: { cacheTtlSeconds: number; score: number };

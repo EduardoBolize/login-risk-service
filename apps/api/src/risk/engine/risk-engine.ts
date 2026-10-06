@@ -15,7 +15,7 @@ export interface RiskEvaluation {
   decision: Decision;
   reasons: RiskReason[];
   results: RuleResult[];
-  /** Rules that errored (e.g. Redis timeout) and were skipped — the engine fails open. */
+  // Rules that errored (e.g. Redis timeout) are skipped: the engine fails open.
   failedRules: string[];
 }
 

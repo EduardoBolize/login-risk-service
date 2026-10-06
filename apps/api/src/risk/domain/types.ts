@@ -15,13 +15,12 @@ export const RiskReason = {
 } as const;
 export type RiskReason = (typeof RiskReason)[keyof typeof RiskReason];
 
-/** Everything a rule needs to know about a single login attempt. */
 export interface LoginContext {
   userId: string;
   ip: string;
   deviceId: string;
   userAgent?: string;
-  /** Whether the caller's credential check passed. */
+  // Outcome of the caller's credential check, not of this risk evaluation.
   success: boolean;
   timestamp: Date;
   geo: GeoLocation | null;
@@ -37,11 +36,11 @@ export interface RuleResult {
   details?: RuleDetails;
 }
 
+// Two phases so every rule judges the login against prior state only:
+// all rules evaluate first, then each one records the current login.
 export interface RiskRule {
   readonly name: string;
-  /** Read-only check against state accumulated from previous logins. */
   evaluate(ctx: LoginContext): Promise<RuleResult>;
-  /** Folds the current login into the rule's state, after every rule has evaluated. */
   record(ctx: LoginContext): Promise<void>;
 }
 

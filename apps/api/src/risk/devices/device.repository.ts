@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 
-/** Abstract class doubles as the DI token so rules stay testable without a database. */
+// Abstract class doubles as the DI token so rules stay testable without a database.
 export abstract class DeviceRepository {
   abstract isKnown(userId: string, deviceId: string): Promise<boolean>;
   abstract countForUser(userId: string): Promise<number>;
