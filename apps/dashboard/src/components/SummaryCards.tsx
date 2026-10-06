@@ -32,7 +32,15 @@ export function SummaryCards({ summary }: { summary?: Summary }) {
   );
 }
 
-function Card({ title, value, footer }: { title: string; value: number | string; footer?: React.ReactNode }) {
+function Card({
+  title,
+  value,
+  footer,
+}: {
+  title: string;
+  value: number | string;
+  footer?: React.ReactNode;
+}) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
       <p className="text-sm font-medium text-slate-500">{title}</p>

@@ -52,7 +52,9 @@ describe('ImpossibleTravelRule', () => {
   });
 
   it('does not move the anchor location on failed logins', async () => {
-    await rule.record(buildContext({ geo: LISBON, success: false, timestamp: minutesLater(start, 5) }));
+    await rule.record(
+      buildContext({ geo: LISBON, success: false, timestamp: minutesLater(start, 5) }),
+    );
 
     const result = await rule.evaluate(
       buildContext({ geo: SAO_PAULO, timestamp: minutesLater(start, 10) }),

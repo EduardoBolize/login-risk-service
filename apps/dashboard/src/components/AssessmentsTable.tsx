@@ -7,7 +7,9 @@ export function AssessmentsTable({ assessments }: { assessments: Assessment[] })
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (assessments.length === 0) {
-    return <p className="px-6 py-12 text-center text-sm text-slate-500">Nenhuma avaliação encontrada.</p>;
+    return (
+      <p className="px-6 py-12 text-center text-sm text-slate-500">Nenhuma avaliação encontrada.</p>
+    );
   }
 
   return (
@@ -33,7 +35,10 @@ export function AssessmentsTable({ assessments }: { assessments: Assessment[] })
                 onClick={() => setExpandedId(expanded ? null : assessment.id)}
                 aria-expanded={expanded}
               >
-                <td className="whitespace-nowrap px-4 py-3 text-slate-500" title={assessment.createdAt}>
+                <td
+                  className="whitespace-nowrap px-4 py-3 text-slate-500"
+                  title={assessment.createdAt}
+                >
                   {timeAgo(assessment.createdAt)}
                 </td>
                 <td className="px-4 py-3 font-medium text-slate-900">{assessment.userId}</td>
@@ -49,7 +54,10 @@ export function AssessmentsTable({ assessments }: { assessments: Assessment[] })
                   )}
                 </td>
                 <td className="px-4 py-3">
-                  <ScoreBar score={assessment.score} barClass={DECISION_STYLES[assessment.decision].bar} />
+                  <ScoreBar
+                    score={assessment.score}
+                    barClass={DECISION_STYLES[assessment.decision].bar}
+                  />
                 </td>
                 <td className="px-4 py-3">
                   <DecisionBadge decision={assessment.decision} />
@@ -57,7 +65,10 @@ export function AssessmentsTable({ assessments }: { assessments: Assessment[] })
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap gap-1">
                     {assessment.reasons.map((reason) => (
-                      <span key={reason} className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700">
+                      <span
+                        key={reason}
+                        className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700"
+                      >
                         {REASON_LABELS[reason] ?? reason}
                       </span>
                     ))}
@@ -104,8 +115,12 @@ function RuleBreakdown({ assessment }: { assessment: Assessment }) {
             className={`rounded-lg border p-3 ${result.triggered ? 'border-rose-200 bg-white' : 'border-slate-200 bg-white/60'}`}
           >
             <div className="flex items-center justify-between">
-              <span className="font-medium text-slate-800">{RULE_LABELS[result.rule] ?? result.rule}</span>
-              <span className={`text-xs font-semibold ${result.triggered ? 'text-rose-600' : 'text-slate-400'}`}>
+              <span className="font-medium text-slate-800">
+                {RULE_LABELS[result.rule] ?? result.rule}
+              </span>
+              <span
+                className={`text-xs font-semibold ${result.triggered ? 'text-rose-600' : 'text-slate-400'}`}
+              >
                 {result.triggered ? `+${result.score}` : 'ok'}
               </span>
             </div>

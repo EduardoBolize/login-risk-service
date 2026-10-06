@@ -6,7 +6,10 @@ describe('haversineKm', () => {
   });
 
   it('computes São Paulo → Rio de Janeiro (~360 km)', () => {
-    const distance = haversineKm({ lat: -23.5505, lon: -46.6333 }, { lat: -22.9068, lon: -43.1729 });
+    const distance = haversineKm(
+      { lat: -23.5505, lon: -46.6333 },
+      { lat: -22.9068, lon: -43.1729 },
+    );
     expect(distance).toBeGreaterThan(350);
     expect(distance).toBeLessThan(370);
   });

@@ -24,28 +24,66 @@ const bob = `bob-${run}`;
 const scenarios = [
   {
     title: 'Usuário legítimo: primeiro login no laptop (Brasil)',
-    events: [{ userId: alice, ip: BRAZIL_IP, deviceId: 'alice-laptop', success: true, timestamp: minutesAgo(180) }],
+    events: [
+      {
+        userId: alice,
+        ip: BRAZIL_IP,
+        deviceId: 'alice-laptop',
+        success: true,
+        timestamp: minutesAgo(180),
+      },
+    ],
     expect: { decision: 'ALLOW', reasons: [] },
   },
   {
     title: 'Usuário legítimo: volta no mesmo laptop',
-    events: [{ userId: alice, ip: BRAZIL_IP, deviceId: 'alice-laptop', success: true, timestamp: minutesAgo(120) }],
+    events: [
+      {
+        userId: alice,
+        ip: BRAZIL_IP,
+        deviceId: 'alice-laptop',
+        success: true,
+        timestamp: minutesAgo(120),
+      },
+    ],
     expect: { decision: 'ALLOW', reasons: [] },
   },
   {
     title: 'Device novo: Alice entra pelo celular',
-    events: [{ userId: alice, ip: BRAZIL_IP, deviceId: 'alice-phone', success: true, timestamp: minutesAgo(60) }],
+    events: [
+      {
+        userId: alice,
+        ip: BRAZIL_IP,
+        deviceId: 'alice-phone',
+        success: true,
+        timestamp: minutesAgo(60),
+      },
+    ],
     expect: { decision: 'CHALLENGE', reasons: ['NEW_DEVICE'] },
   },
   {
     title: 'Conta comprometida: Lisboa 30 min depois, device desconhecido',
-    events: [{ userId: alice, ip: LISBON_IP, deviceId: 'unknown-pc', success: true, timestamp: minutesAgo(30) }],
+    events: [
+      {
+        userId: alice,
+        ip: LISBON_IP,
+        deviceId: 'unknown-pc',
+        success: true,
+        timestamp: minutesAgo(30),
+      },
+    ],
     expect: { decision: 'DENY', reasons: ['NEW_DEVICE', 'IMPOSSIBLE_TRAVEL'] },
   },
   {
     title: 'Brute force: 5 senhas erradas e então a correta',
     events: [
-      ...[10, 9, 8, 7, 6].map((m) => ({ userId: bob, ip: US_IP, deviceId: 'bob-pc', success: false, timestamp: minutesAgo(m) })),
+      ...[10, 9, 8, 7, 6].map((m) => ({
+        userId: bob,
+        ip: US_IP,
+        deviceId: 'bob-pc',
+        success: false,
+        timestamp: minutesAgo(m),
+      })),
       { userId: bob, ip: US_IP, deviceId: 'bob-pc', success: true, timestamp: minutesAgo(5) },
     ],
     expect: { decision: 'CHALLENGE', reasons: ['BRUTE_FORCE'] },
@@ -87,12 +125,15 @@ for (const scenario of scenarios) {
   }
 
   const ok =
-    result.decision === scenario.expect.decision && sameReasons(result.reasons, scenario.expect.reasons);
+    result.decision === scenario.expect.decision &&
+    sameReasons(result.reasons, scenario.expect.reasons);
   if (!ok) failures++;
 
   const reasons = result.reasons.length ? result.reasons.join(', ') : '—';
   console.log(`${ok ? '✔' : '✘'} ${scenario.title}`);
-  console.log(`    ${result.decision.padEnd(9)} score ${String(result.score).padStart(3)}  ${reasons}`);
+  console.log(
+    `    ${result.decision.padEnd(9)} score ${String(result.score).padStart(3)}  ${reasons}`,
+  );
   if (!ok) {
     console.log(`    expected ${scenario.expect.decision} [${scenario.expect.reasons.join(', ')}]`);
   }

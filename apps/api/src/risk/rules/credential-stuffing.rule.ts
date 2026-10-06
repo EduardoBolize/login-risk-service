@@ -1,7 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
 import { REDIS } from '../../redis/redis.constants';
-import { LoginContext, RiskReason, RiskRule, RuleResult, notTriggered, triggered } from '../domain/types';
+import {
+  LoginContext,
+  RiskReason,
+  RiskRule,
+  RuleResult,
+  notTriggered,
+  triggered,
+} from '../domain/types';
 import { RISK_CONFIG, RiskConfig } from '../risk.config';
 
 /**

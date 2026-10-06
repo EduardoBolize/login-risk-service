@@ -15,9 +15,21 @@ export const RULE_LABELS: Record<string, string> = {
 };
 
 export const DECISION_STYLES: Record<Decision, { label: string; badge: string; bar: string }> = {
-  ALLOW: { label: 'Permitido', badge: 'bg-emerald-100 text-emerald-800 ring-emerald-600/20', bar: 'bg-emerald-500' },
-  CHALLENGE: { label: 'MFA', badge: 'bg-amber-100 text-amber-800 ring-amber-600/20', bar: 'bg-amber-500' },
-  DENY: { label: 'Bloqueado', badge: 'bg-rose-100 text-rose-800 ring-rose-600/20', bar: 'bg-rose-500' },
+  ALLOW: {
+    label: 'Permitido',
+    badge: 'bg-emerald-100 text-emerald-800 ring-emerald-600/20',
+    bar: 'bg-emerald-500',
+  },
+  CHALLENGE: {
+    label: 'MFA',
+    badge: 'bg-amber-100 text-amber-800 ring-amber-600/20',
+    bar: 'bg-amber-500',
+  },
+  DENY: {
+    label: 'Bloqueado',
+    badge: 'bg-rose-100 text-rose-800 ring-rose-600/20',
+    bar: 'bg-rose-500',
+  },
 };
 
 /** "BR" → 🇧🇷 using regional indicator symbols. */
